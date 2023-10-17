@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Survey Form</title>
+    <link rel="stylesheet" href="customerForm.css">
+    </head>
+</head>
+<body>
+    <div class="container">
+        <form id="surveyForm">
+            <h2>Customer Survey Form</h2>
+            <label  class="optionbtn" for="firstName">First Name:</label>
+            <input required class="optionbtn" type="text" id="firstName" >
+
+            <label class="optionbtn" for="lastName">Last Name:</label>
+            <input required class="optionbtn" type="text" id="lastName" >
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required>
+
+            <label for="country">Country:</label>
+            <select id="country" required>
+                <option value="india">India</option>
+                <option value="india">Nepal</option>
+            </select>
+
+            <label >Gender:</label>
+            <input required class="optionbtn" type="radio" id="male" name="gender" value="male"><label class="optionbtn" for="male">Male</label>
+            <input required class="optionbtn" type="radio" id="female" name="gender" value="female"> <label class="optionbtn" for="female">Female</label>
+            <input required class="optionbtn" type="radio" id="other" name="gender" value="other"> <label class="optionbtn" for="other">Other</label>
+
+            <label for="profession">Profession:</label>
+            <input required type="text" id="profession" >
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="number" id="mobile" required>
+
+            <div class="button-container">
+                <button type="button" onclick="resetForm()">Reset</button>
+                <button type="button" onclick="submitForm()">Submit</button>
+            </div>
+            <!-- <div class="button-container">
+                <button type="reset">Reset</button>
+                <button type="submit" onclick="submitForm()">Submit</button>
+            </div> -->
+        </form>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Submitted Values</h2>
+        <div id="submittedValues"></div>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+        
+    <script>
+        function resetForm() {
+            document.getElementById("surveyForm").reset();
+        }
+
+        function submitForm() {
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var dob = document.getElementById("dob").value;
+            var country = document.getElementById("country").value;
+            var gender = document.querySelectorAll('input[name="gender"]:checked');
+            var profession = document.getElementById("profession").value;
+            var email = document.getElementById("email").value;
+            var mobile = document.getElementById("mobile").value;
+            if(firstName=="" || lastName=="" || dob == "" || country == "" || profession== "" || email==""|| mobile== ""){
+            alert("please fill all the details.");
+            return;
+         }
+            if (gender.length === 0) {
+                alert("Please select a gender.");
+                return;
+            }
+
+            var selectedGender = [];
+            for (var i = 0; i < gender.length; i++) {
+                selectedGender.push(gender[i].value);
+            }
+
+            var submittedValues = `
+                <p>First Name: ${firstName}</p>
+                <p>Last Name: ${lastName}</p>
+                <p>Date of Birth: ${dob}</p>
+                <p>Country: ${country}</p>
+                <p>Gender: ${selectedGender.join(", ")}</p>
+                <p>Profession: ${profession}</p>
+                <p>Email: ${email}</p>
+                <p>Mobile Number: ${mobile}</p>
+            `;
+
+            document.getElementById("submittedValues").innerHTML = submittedValues;
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+           // resetForm();
+        }
+    </script>
+
+</body>
+</html>
